@@ -1,0 +1,163 @@
+[
+    [
+        null,
+        {
+            "discipline_id": 1,
+            "teacher_id": 1,
+            "zoom_link": "",
+            "period": "31-43",
+            "type": 2,
+            "info": "No information"
+        },
+        {
+            "discipline_id": 1,
+            "teacher_id": 3,
+            "zoom_link": "https://us04web.zoom.us/j/77741108085?pwd=7W89XgPs64WT8z8aBBsMCo7yhTN26i.1",
+            "period": "30-40",
+            "type": 1,
+            "info": "No information"
+        },
+        null,
+        null,
+        null
+    ],
+    [
+        {
+            "discipline_id": 2,
+            "teacher_id": 2,
+            "zoom_link": "https://us04web.zoom.us/j/4074773619?pwd=cnd4SWM3Q0ZaME05dWlsdUMrM2NoQT09",
+            "period": "35-43",
+            "type": 2,
+            "info": "No information"
+        },
+        {
+            "discipline_id": 3,
+            "teacher_id": 7,
+            "zoom_link": "https://us05web.zoom.us/j/8572022979?pwd=OG5zb0hGYWpyaUVVWEFITkxGZXRjQT09",
+            "period": "30-40",
+            "type": 1,
+            "info": "No information"
+        },
+        {
+            "discipline_id": 2,
+            "teacher_id": 2,
+            "zoom_link": "https://us04web.zoom.us/j/4074773619?pwd=cnd4SWM3Q0ZaME05dWlsdUMrM2NoQT09",
+            "period": "32-39",
+            "type": 3,
+            "info": "Для подгруппы Глазуновой"
+        },
+        null,
+        {
+            "discipline_id": 2,
+            "teacher_id": 1,
+            "zoom_link": "",
+            "period": "32-39",
+            "type": 3,
+            "info": "Для подгруппы Щербы"
+        },
+        null
+    ],
+    [
+        {
+            "discipline_id": 4,
+            "teacher_id": 4,
+            "zoom_link": "https://us04web.zoom.us/j/6510832909?pwd=MjQ5blM4NFRQb1BjL3RZV0QvRzluUT09",
+            "period": "30-39",
+            "type": 1,
+            "info": "Вторая ссылка: https://us05web.zoom.us/j/3742741320?pwd=4WaOOgvlOe23k2LI3rSfUZIxtoALo2.1"
+        },
+        {
+            "discipline_id": 3,
+            "teacher_id": 7,
+            "zoom_link": "https://us05web.zoom.us/j/8572022979?pwd=OG5zb0hGYWpyaUVVWEFITkxGZXRjQT09",
+            "period": "30-43",
+            "type": 2,
+            "info": "No information"
+        },
+        {
+            "discipline_id": 3,
+            "teacher_id": 7,
+            "zoom_link": "https://us05web.zoom.us/j/8572022979?pwd=OG5zb0hGYWpyaUVVWEFITkxGZXRjQT09",
+            "period": "30-37",
+            "type": 2,
+            "info": "No information"
+        },
+        {
+            "discipline_id": 4,
+            "teacher_id": 4,
+            "zoom_link": "https://us04web.zoom.us/j/6510832909?pwd=MjQ5blM4NFRQb1BjL3RZV0QvRzluUT09",
+            "period": "30-39",
+            "type": 2,
+            "info": "Вторая ссылка: https://us05web.zoom.us/j/3742741320?pwd=4WaOOgvlOe23k2LI3rSfUZIxtoALo2.1"
+        },
+        null,
+        null
+    ],
+    [
+        {
+            "discipline_id": 5,
+            "teacher_id": 5,
+            "zoom_link": "https://us05web.zoom.us/j/3188670893?pwd=cDhJcnlmWVp2RkJDemxsZnBFS2dLZz09",
+            "period": "30-40",
+            "type": 1,
+            "info": "No information"
+        },
+        null,
+        null,
+        {
+            "discipline_id": 4,
+            "teacher_id": 4,
+            "zoom_link": "https://us04web.zoom.us/j/6510832909?pwd=MjQ5blM4NFRQb1BjL3RZV0QvRzluUT09",
+            "period": "31-39",
+            "type": 3,
+            "info": "Вторая ссылка: https://us05web.zoom.us/j/3742741320?pwd=4WaOOgvlOe23k2LI3rSfUZIxtoALo2.1"
+        },
+        null,
+        null
+    ],
+    [
+        {
+            "discipline_id": 2,
+            "teacher_id": 6,
+            "zoom_link": "",
+            "period": "30-34",
+            "type": 1,
+            "info": "No information"
+        },
+        {
+            "discipline_id": 5,
+            "teacher_id": 5,
+            "zoom_link": "https://us05web.zoom.us/j/3188670893?pwd=cDhJcnlmWVp2RkJDemxsZnBFS2dLZz09",
+            "period": "32-42",
+            "type": 1,
+            "info": "No information"
+        },
+        {
+            "discipline_id": 1,
+            "teacher_id": 1,
+            "zoom_link": "",
+            "period": "31-39",
+            "type": 2,
+            "info": "No information"
+        },
+        null,
+        null,
+        null
+    ],
+    [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    ],
+    [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    ]
+]
