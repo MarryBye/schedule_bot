@@ -11,10 +11,6 @@ from language import *
 router: aiogram.Router = aiogram.Router(name=__name__)
 db_controller = DatabaseController("suitt_schedule.db")
 
-@router.message()
-async def aaa(msg: aiogram.types.Message) -> None:
-    print(msg.chat.id)
-
 @router.message(aiogram.filters.Command("day_schedule"))
 async def day_schedule(msg: aiogram.types.Message) -> None:
     day_of_week: int = datetime.date.today().weekday()
