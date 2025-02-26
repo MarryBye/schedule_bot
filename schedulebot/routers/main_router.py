@@ -1,5 +1,6 @@
 import aiogram
-from core.classes.database.database_controller import DatabaseController
+
+from schedulebot.database_controller import DatabaseController
 
 router: aiogram.Router = aiogram.Router(name=__name__)
 db_controller = DatabaseController("suitt_schedule.db")

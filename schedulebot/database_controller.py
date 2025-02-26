@@ -2,7 +2,8 @@ import os
 import sqlite3 as sql
 
 from typing import Any, Union
-from core.classes.singleton import Singleton
+from schedulebot.singleton import Singleton
+from datetime import datetime
 
 class DatabaseController(metaclass=Singleton):
     def __init__(self, db_name: str) -> None:
@@ -14,7 +15,7 @@ class DatabaseController(metaclass=Singleton):
         self.load_scripts()
         
     def load_scripts(self) -> None:
-        scripts_folder = "./database/"
+        scripts_folder = "./schedulebot/database/"
         for script in os.listdir(scripts_folder):
             script_path = os.path.join(scripts_folder, script)
             with open(script_path, "r", encoding="UTF-8") as file:

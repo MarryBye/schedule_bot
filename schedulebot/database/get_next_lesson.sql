@@ -14,4 +14,4 @@ INNER JOIN
     disciplines AS d ON s.discipline_id = d.id,
     teachers AS t ON s.teacher_id = t.id 
 WHERE
-    s.day_of_week = ? AND TIME(s.time) >= TIME('now');
+    s.day_of_week = ? AND TIME(s.time) >= TIME(?);
