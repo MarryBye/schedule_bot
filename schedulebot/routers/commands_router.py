@@ -31,22 +31,22 @@ async def load_new_schedule(msg: Message, bot: Bot) -> None:
     with open("schedule.json", "r", encoding="UTF-8") as file:
         data: list[list[dict[str, Any] | None]] = json_load(file)
         
-    for day in range(len(data)):
-        day_lessons = data[day]
-        for lesson in range(len(day_lessons)):
-            lesson_data = day_lessons[lesson]
-            if lesson_data is None: continue
-            
-            bot.add_new_lesson(
-                day, 
-                lessons_time[lesson], 
-                lesson_data["teacher_id"], 
-                lesson_data["discipline_id"], 
-                lesson_data["zoom_link"], 
-                lesson_data["period"], 
-                lesson_data["info"], 
-                lesson_data["type"]
-            )
+        for day in range(len(data)):
+            day_lessons = data[day]
+            for lesson in range(len(day_lessons)):
+                lesson_data = day_lessons[lesson]
+                if lesson_data is None: continue
+                
+                bot.add_new_lesson(
+                    day, 
+                    lessons_time[lesson], 
+                    lesson_data["teacher_id"], 
+                    lesson_data["discipline_id"], 
+                    lesson_data["zoom_link"], 
+                    lesson_data["period"], 
+                    lesson_data["info"], 
+                    lesson_data["type"]
+                )
     
-    await msg.reply("Загрузил новое расписание", parse_mode="HTML")
+        await msg.reply("Загрузил новое расписание", parse_mode="HTML")
         

@@ -7,44 +7,47 @@ from datetime import datetime, date
 from schedulebot.singleton import Singleton
 from schedulebot.database_controller import DatabaseController
 from schedulebot.botmiddleware import BotMiddleware
+from schedulebot.config import SQLITE_DBFILE, GROUP_ID
+from schedulebot.functions import form_next_lesson, form_day_schedule
 
 class Bot(aiogram.Bot, metaclass=Singleton):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         
         self.dispatcher = aiogram.Dispatcher()
-        self.db_controller = DatabaseController("suitt_schedule.db")
+        self.db_controller = DatabaseController(SQLITE_DBFILE)
         
     def database_execute(self, script_name: str, *args: Any, fetch_count: int=-1) -> Union[Any, None]:
         return self.db_controller.execute(script_name, *args, fetch_count=fetch_count)
 
-    # async def heart_beat(self):
-    #     last_day = None
-    #     while True:
-    #         time_now = datetime.now()
-    #         day_of_week = date.today().weekday()
+    async def heart_beat(self):
+        last_day = None
+        while True:
+            time_now = datetime.now()
+            day_of_week = date.today().weekday()
             
-    #         next_lesson = self.get_next_lesson(day_of_week)
+            next_lesson = self.get_next_lesson(day_of_week)
 
-    #         if next_lesson is not None:
-    #             next_lesson_time = datetime.strptime(next_lesson["time"], "%H:%M:%S").replace(
-    #                 year=time_now.year, month=time_now.month, day=time_now.day
-    #             )
+            if next_lesson is not None:
+                next_lesson_time = datetime.strptime(next_lesson["time"], "%H:%M:%S").replace(
+                    year=time_now.year, month=time_now.month, day=time_now.day
+                )
 
-    #             if 0 <= (next_lesson_time - time_now).total_seconds() <= 60:
-    #                 await self.send_message(GROUP_ID, get_next_lesson(day_of_week), parse_mode="MarkdownV2", disable_web_page_preview=True)
+                if 0 <= (next_lesson_time - time_now).total_seconds() <= 60:
+                    await self.send_message(GROUP_ID, form_next_lesson(next_lesson), parse_mode="MarkdownV2", disable_web_page_preview=True)
                 
-    #             if day_of_week != last_day and time_now.hour == 6 and time_now.minute == 0:
-    #                 last_day = day_of_week
-    #                 await self.send_message(GROUP_ID, get_day_schedule(day_of_week), parse_mode="MarkdownV2", disable_web_page_preview=True)
+                if day_of_week != last_day and time_now.hour == 6 and time_now.minute == 0:
+                    last_day = day_of_week
+                    day_schedule = self.get_day_lessons(day_of_week)
+                    await self.send_message(GROUP_ID, form_day_schedule(day_schedule), parse_mode="MarkdownV2", disable_web_page_preview=True)
                 
-    #         sleep_time = 60 - (datetime.now().second)
-    #         await asyncio.sleep(sleep_time)
+            sleep_time = 60 - (datetime.now().second)
+            await asyncio.sleep(sleep_time)
     
     async def run(self, routers=[]) -> None:
         self.dispatcher.include_routers(*routers)
         self.dispatcher.update.middleware(BotMiddleware(self))
-        # asyncio.create_task(self.heart_beat()) 
+        asyncio.create_task(self.heart_beat()) 
         await self.dispatcher.start_polling(self)
         
     def add_new_lesson(self, day_of_week: int, time: str, teacher_id: int, discipline_id: int, zoom_link: str, period: str, additional_info: str, type: int):

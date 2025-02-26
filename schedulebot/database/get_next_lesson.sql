@@ -1,7 +1,7 @@
 SELECT 
 	s.day_of_week AS day,
 	s.time AS time,
-	CONCAT(t.name, ' ', t.lastname, ' ', t.surname) AS teacher,
+	(t.name || ' ' || t.lastname || ' ' || t.surname) AS teacher,
     d.is_exam AS is_exam_discipline,
     d.name AS discipline_name,
     s.period AS period,

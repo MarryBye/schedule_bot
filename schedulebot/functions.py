@@ -38,6 +38,7 @@ def form_day_schedule(day_schedule: list[Any]) -> str:
     msg_text = ""
     for lesson in day_schedule:
         if is_actual_lesson(lesson):
+            print(lesson["period"], get_today_week(), is_actual_lesson(lesson))
             msg_text += form_lesson(lesson)
         
     return msg_text
@@ -48,6 +49,7 @@ def form_next_lesson(lesson: list[Any]) -> str:
     if lesson is None: return msg_text
 
     if is_actual_lesson(lesson):
+        print(lesson["period"], get_today_week(), is_actual_lesson(lesson))
         return form_lesson(lesson)
     
     return msg_text
