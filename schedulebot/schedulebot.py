@@ -47,7 +47,7 @@ class Bot(aiogram.Bot, metaclass=Singleton):
         return self.db_controller.execute(script_name, *args, fetch_count=fetch_count)
 
     def generate_content(self, content: list):
-        return self.gemini_integration.generate_content(["При формировании ответа не вставляй лишних данных, разметку используй в HTML формате, используя ТОЛЬКО теги <a>, <b>, <i>, текст отделяй просто отступами. Выполни следующую задачу:", *content]).text
+        return self.gemini_integration.generate_content(["При формировании ответа не используй никакую разметку, кроме тегов <a>, <b>, <i>, остальные никакие нельзя, текст отделяй просто отступами. Выполни следующую задачу:", *content]).text
 
     async def heart_beat(self):
         last_day = None
