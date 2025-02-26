@@ -1,5 +1,9 @@
 import aiogram
 import asyncio
+import pandas as pd
+import os
+
+import google.generativeai as genai
 
 from typing import Any, Union
 from datetime import datetime, date
@@ -7,7 +11,7 @@ from datetime import datetime, date
 from schedulebot.singleton import Singleton
 from schedulebot.database_controller import DatabaseController
 from schedulebot.botmiddleware import BotMiddleware
-from schedulebot.config import SQLITE_DBFILE, GROUP_ID
+from schedulebot.config import SQLITE_DBFILE, GROUP_ID, GEMINI_API_TOKEN
 from schedulebot.functions import form_next_lesson, form_day_schedule
 
 class Bot(aiogram.Bot, metaclass=Singleton):
@@ -17,8 +21,33 @@ class Bot(aiogram.Bot, metaclass=Singleton):
         self.dispatcher = aiogram.Dispatcher()
         self.db_controller = DatabaseController(SQLITE_DBFILE)
         
+        self.gemini_integration = genai.GenerativeModel('gemini-2.0-flash')
+        genai.configure(api_key=GEMINI_API_TOKEN)
+        
+        if not os.path.exists("messages.csv"):
+            pd.DataFrame(
+                {
+                    "author_id": [],
+                    "author_name": [],
+                    "author_username": [],
+                    "creation_date": [],
+                    "creation_time": [],
+                    "chat_id": [],
+                    "chat_type": [],
+                    "text": [],
+                    "is_answer": [],
+                    "answerred_text": [],
+                    "answerred_author_id": [],
+                    "answerred_author_name": []
+                }
+            ).to_csv("messages.csv", index=False)
+        self.messages_set = pd.read_csv("messages.csv")
+
     def database_execute(self, script_name: str, *args: Any, fetch_count: int=-1) -> Union[Any, None]:
         return self.db_controller.execute(script_name, *args, fetch_count=fetch_count)
+
+    def generate_content(self, content: list):
+        return self.gemini_integration.generate_content(["При формировании ответа не вставляй лишних данных, разметку используй в HTML формате, используя ТОЛЬКО теги <a>, <b>, <i>, текст отделяй просто отступами. Выполни следующую задачу:", *content]).text
 
     async def heart_beat(self):
         last_day = None
@@ -40,7 +69,9 @@ class Bot(aiogram.Bot, metaclass=Singleton):
                     last_day = day_of_week
                     day_schedule = self.get_day_lessons(day_of_week)
                     await self.send_message(GROUP_ID, form_day_schedule(day_schedule), parse_mode="MarkdownV2", disable_web_page_preview=True)
-                
+            
+            self.messages_set.to_csv("messages.csv", index=False)
+            
             sleep_time = 60 - (datetime.now().second)
             await asyncio.sleep(sleep_time)
     
