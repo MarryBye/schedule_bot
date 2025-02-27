@@ -1,9 +1,5 @@
 import aiogram
 import asyncio
-import pandas as pd
-import os
-
-import google.generativeai as genai
 
 from typing import Any, Union
 from datetime import datetime, date
@@ -11,8 +7,10 @@ from datetime import datetime, date
 from schedulebot.singleton import Singleton
 from schedulebot.database_controller import DatabaseController
 from schedulebot.botmiddleware import BotMiddleware
-from schedulebot.config import SQLITE_DBFILE, GROUP_ID, GEMINI_API_TOKEN
+from schedulebot.config import SQLITE_DBFILE, GROUP_ID
 from schedulebot.functions import form_next_lesson, form_day_schedule
+from schedulebot.message_history import MessageHistory
+from schedulebot.ai_module import BotAIModule
 
 class Bot(aiogram.Bot, metaclass=Singleton):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -21,33 +19,16 @@ class Bot(aiogram.Bot, metaclass=Singleton):
         self.dispatcher = aiogram.Dispatcher()
         self.db_controller = DatabaseController(SQLITE_DBFILE)
         
-        self.gemini_integration = genai.GenerativeModel('gemini-2.0-flash')
-        genai.configure(api_key=GEMINI_API_TOKEN)
-        
-        if not os.path.exists("messages.csv"):
-            pd.DataFrame(
-                {
-                    "author_id": [],
-                    "author_name": [],
-                    "author_username": [],
-                    "creation_date": [],
-                    "creation_time": [],
-                    "chat_id": [],
-                    "chat_type": [],
-                    "text": [],
-                    "is_answer": [],
-                    "answerred_text": [],
-                    "answerred_author_id": [],
-                    "answerred_author_name": []
-                }
-            ).to_csv("messages.csv", index=False)
-        self.messages_set = pd.read_csv("messages.csv")
+        self.ai_module = BotAIModule('gemini-2.0-flash')
+        self.messages_set = MessageHistory("messages.csv")
 
     def database_execute(self, script_name: str, *args: Any, fetch_count: int=-1) -> Union[Any, None]:
         return self.db_controller.execute(script_name, *args, fetch_count=fetch_count)
 
     def generate_content(self, content: list):
-        return self.gemini_integration.generate_content(["При формировании ответа не используй никакую разметку, кроме тегов <a>, <b>, <i>, остальные никакие нельзя, текст отделяй просто отступами. Выполни следующую задачу:", *content]).text
+        return self.ai_module.generate_content(
+            ["При формировании ответа не используй никакую разметку, кроме тегов <a>, <b>, <i>, остальные никакие нельзя, текст отделяй просто отступами. Выполни следующую задачу:", *content]
+        ).text.strip()
 
     async def heart_beat(self):
         last_day = None
@@ -99,4 +80,18 @@ class Bot(aiogram.Bot, metaclass=Singleton):
         if week_day == -1: week_day = datetime.now().weekday()
         if after_time == "now": after_time = datetime.now().strftime("%H:%M")
         result = self.database_execute("get_next_lesson.sql", week_day, after_time, fetch_count=1)
+        return result
+    
+    def save_message(self, author_id, author_name, author_username, creation_date, creation_time, chat_id, chat_type, text, is_answer, answerred_text, answerred_author_id, answerred_author_name):
+        self.database_execute("new_message.sql", author_id, author_name, author_username, creation_date, creation_time, chat_id, chat_type, text, is_answer, answerred_text, answerred_author_id, answerred_author_name)
+        
+    def get_messages(self, chat_id: int, username: str=None, date: str=None, time: str=None):
+        result = self.database_execute("get_messages.sql", chat_id, username, date, time)
+        return result
+    
+    def save_ai_note(self, chat_id: int, note_text: str, note_date: str):
+        self.database_execute("new_ai_note.sql", chat_id, note_text, note_date)
+        
+    def get_ai_notes(self, chat_id: int):
+        result = self.database_execute("get_ai_notes.sql", chat_id, date)
         return result

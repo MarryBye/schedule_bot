@@ -21,6 +21,7 @@ async def custom_prompt(msg: Message, command: CommandObject, bot: Bot) -> None:
         return
     
     filtered_records = get_rows_from_kvalues(bot.messages_set, kvalues)
-    response = bot.generate_content([f"Основываясь на следующих данных: {filtered_records.to_string()}, сделай: ", kvalues["prompt"]])
+    response = bot.generate_content([f"{kvalues["prompt"]}. Чтобы ответить на вопрос, ты можешь использовать данные: {filtered_records.to_string()}, можешь также писать что-то от себя, если это уместно для указанного вопроса."])
+    print(f"{kvalues["prompt"]}. Используй для этого следующие данные: {filtered_records.to_string()}")
     
     await msg.reply(response, parse_mode="HTML")

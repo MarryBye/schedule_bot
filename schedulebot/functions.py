@@ -6,6 +6,9 @@ from datetime import date, datetime, timedelta
 
 from schedulebot.language import *
 
+def normalize_string(s: str) -> str:
+    return " ".join(s.split())
+
 def get_today_week() -> int:
     date_now = date.today()
     if 1 <= date_now.month <= 8:
