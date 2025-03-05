@@ -48,3 +48,23 @@ class DatabaseController(metaclass=Singleton):
             self.connection.rollback()
         finally:
             return result
+        
+    def add_new_lesson(self, day_of_week: int, time: str, teacher_id: int, discipline_id: int, zoom_link: str, period: str, additional_info: str, type: int):
+        self.execute("add_new_lesson.sql", day_of_week, time, teacher_id, discipline_id, zoom_link, period, additional_info, type)
+        
+    def clear_lessons(self):
+        self.execute("clear_schedule.sql")
+        
+    def recreate_tables(self):
+        self.execute("create_tables.sql")
+        
+    def get_day_lessons(self, week_day: int=-1):
+        if week_day == -1: week_day = datetime.now().weekday()
+        result = self.execute("get_day_lessons.sql", week_day)
+        return result
+    
+    def get_next_lesson(self, week_day: int=-1, after_time: str="now"):
+        if week_day == -1: week_day = datetime.now().weekday()
+        if after_time == "now": after_time = datetime.now().strftime("%H:%M")
+        result = self.execute("get_next_lesson.sql", week_day, after_time, fetch_count=1)
+        return result

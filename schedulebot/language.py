@@ -31,7 +31,5 @@ lessons_time = {
 }
 
 lesson_text_template = (
-    """
-    \nℹ️ <b>%s</b>\n🕓 %s - %s\n<blockquote expandable><b>👨‍🏫 Преподаватель</b>: %s\n<b>🧩 Тип урока</b>: %s\n<b>💀 Экзамен</b>: %s\n<b>📝 Дополнительная информация</b>: \n%s</blockquote>\n<a href="%s">🔗 Войти в конференцию</a>
-    """
+    """\nℹ️ <b>%s</b>\n🕓 %s - %s\n<blockquote expandable><b>👨‍🏫 Преподаватель</b>: %s\n<b>🧩 Тип урока</b>: %s\n<b>💀 Экзамен</b>: %s\n<b>📝 Дополнительная информация</b>: \nПериод: %s недели\n%s</blockquote>\n<a href="%s">🔗 Войти в конференцию</a>\n"""
 )
