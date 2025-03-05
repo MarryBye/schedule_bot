@@ -12,3 +12,4 @@ from schedulebot.keyboards.show_schedule import KEYBOARD
 if __name__ == "__main__":
     bot = ScheduleBot(token=BOT_TOKEN)
     asyncio.run(bot.run([main_router, commands_router, ai_router]))
+# ебать
