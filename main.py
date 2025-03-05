@@ -6,7 +6,6 @@ from schedulebot.config import BOT_TOKEN
 from schedulebot.routers.main_router import router as main_router
 from schedulebot.routers.commands_router import router as commands_router
 from schedulebot.routers.ai_router import router as ai_router
-# from schedulebot.routers.collector_router import router as collector_router
 
 from schedulebot.keyboards.show_schedule import KEYBOARD
 
