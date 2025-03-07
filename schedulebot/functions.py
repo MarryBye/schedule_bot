@@ -12,7 +12,7 @@ def normalize_string(s: str) -> str:
 def get_week(d: date=None) -> int:
     if d is None:
         d = date.today()
-    first_week = date(year=d.year, month=8, day=5)
+    first_week = date(year=2024, month=8, day=5)
     today_week = (d - first_week).days // 7
     return today_week % 52 + 1
 
