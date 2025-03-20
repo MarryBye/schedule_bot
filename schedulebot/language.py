@@ -30,6 +30,25 @@ lessons_time = {
     5: "15:55"
 }
 
+numbers_emojis = {
+    0: "1️⃣",
+    1: "2️⃣",
+    2: "3️⃣",
+    3: "4️⃣",
+    4: "5️⃣",
+    5: "6️⃣"
+}
+
 lesson_text_template = (
-    """\nℹ️ <b>%s</b>\n🕓 %s - %s\n<blockquote expandable><b>👨‍🏫 Преподаватель</b>: %s\n<b>🧩 Тип урока</b>: %s\n<b>💀 Экзамен</b>: %s\n<b>📝 Дополнительная информация</b>: \nПериод: %s недели\n%s</blockquote>\n<a href="%s">🔗 Войти в конференцию</a>\n"""
+    """\n<b>%s ПАРА </b>\n🏷<b>%s</b>\n🕓 %s - %s\n<blockquote expandable><b>👨‍🏫 Преподаватель</b>: %s\n<b>🧩 Тип урока</b>: %s\n<b>💀 Экзамен</b>: %s\n<b>📝 Дополнительная информация</b>: \nПериод: %s недели\n%s</blockquote>\n<a href="%s">🔗 Войти в конференцию</a>\n"""
+)
+
+empty_lesson_text_template = (
+    """
+    <b>%s ПАРА </b>\nℹ️ <b>%s</b>\n🕓 %s - %s\n😭Пары нет\n
+    """
+)
+
+break_text_template = (
+    """\n<b>Перемена</b>\n🕓 %s - %s\n"""
 )

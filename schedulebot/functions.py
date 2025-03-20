@@ -9,6 +9,13 @@ from schedulebot.language import *
 def normalize_string(s: str) -> str:
     return " ".join(s.split())
 
+def get_lesson_number(lesson):
+    start_time = lesson["time"].split(":")[0] + ":" + lesson["time"].split(":")[1]
+    if start_time in lessons_time.values():
+        return list(lessons_time.values()).index(start_time)
+    else:
+        return None
+
 def get_week(d: date=None) -> int:
     if d is None:
         d = date.today()
@@ -17,14 +24,15 @@ def get_week(d: date=None) -> int:
     return today_week % 52 + 1
 
 def form_lesson(lesson):
+    lesson_number = numbers_emojis[get_lesson_number(lesson)]
     start_time = datetime.strptime(lesson["time"], "%H:%M:%S")
     delta_time = timedelta(hours=1, minutes=20)
     end_time = start_time + delta_time
 
     end_time = end_time.strftime("%H:%M")
     start_time = start_time.strftime("%H:%M")
-    
-    lesson_text = lesson_text_template % (lesson["discipline_name"], start_time, end_time, lesson["teacher"], lesson_types[lesson["type"]], discipline_types[lesson["is_exam_discipline"]], lesson["period"], lesson["info"], lesson["zoom_link"])
+    print(1)
+    lesson_text = lesson_text_template % (lesson_number, lesson["discipline_name"], start_time, end_time, lesson["teacher"], lesson_types[lesson["type"]], discipline_types[lesson["is_exam_discipline"]], lesson["period"], lesson["info"], lesson["zoom_link"])
     
     return lesson_text
 

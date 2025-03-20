@@ -18,7 +18,7 @@ async def form_schedule(d: date, apps: Apps):
     week_day = d.weekday()
     week_number = get_week(d)
     day_schedule = apps.database_controller.get_day_lessons(week_day)
-    text_title = f"📆<b>{week_days[week_day]}, {d}, {week_number} неделя</b>"
+    text_title = f"📆<b>{week_days[week_day]}, {d}, {week_number} неделя</b>\n"
     msg_text = text_title + form_day_schedule(day_schedule, d)
     keyboard = apps.keyboards_controller.get_keyboard("show_schedule")
     
